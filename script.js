@@ -1,22 +1,18 @@
 const params = new URLSearchParams(window.location.search);
-const ID = params.get("id");
 
+const ID = params.get("id") || "";
 
-// temporary data
+// Read data from URL
+let patient = params.get("patient") || "Unknown";
+let time = params.get("time") || "-";
+let mriPart = params.get("mri") || "-";
+let date = params.get("date") || "-";
+let status = params.get("status") || "PENDING";
 
-let patient = "Abdul Haris";
-let time = "10:30 AM";
-let mriPart = "MRI Brain";
-let date = "5 July 2026";
-let status = "PENDING";
-
-
-// language setting
-
+// Language
 let currentLang = "en";
 
 const LANG = {
-
 en:{
 title:"MRI Appointment",
 confirm:"CONFIRM",
@@ -28,7 +24,6 @@ mri:"MRI Part",
 date:"Date",
 status:"Status"
 },
-
 bm:{
 title:"Temujanji MRI",
 confirm:"SAHKAN",
@@ -40,187 +35,118 @@ mri:"Bahagian MRI",
 date:"Tarikh",
 status:"Status"
 }
-
 };
 
-
-// initial page load
-
+// Initial page
 setLang("en");
 
-
-
-// confirm button
-
-document.getElementById("confirmBtn").onclick =
-function(){
-
+// Confirm
+document.getElementById("confirmBtn").onclick = function(){
 sendResponse("CONFIRMED");
-
 };
 
-
-
-// cancel button
-
-document.getElementById("cancelBtn").onclick =
-function(){
+// Cancel
+document.getElementById("cancelBtn").onclick = function(){
 
 let reason = prompt(
-
-currentLang == "en"
+currentLang=="en"
 ? "Reason for cancellation"
 : "Sebab pembatalan"
-
 );
 
 if(reason){
-
 sendResponse("CANCELLED - " + reason);
-
 }
 
 };
 
-
-
-// reschedule button
-
-document.getElementById("rescheduleBtn").onclick =
-function(){
+// Reschedule
+document.getElementById("rescheduleBtn").onclick = function(){
 
 let newDate = prompt(
-
-currentLang == "en"
+currentLang=="en"
 ? "Enter new requested date"
 : "Masukkan tarikh baru"
-
 );
 
 if(newDate){
-
 sendResponse("RESCHEDULE - " + newDate);
-
 }
 
 };
 
-
-
-// fake backend for now
-
+// Fake backend
 function sendResponse(response){
 
 console.log({
-
-orderId: ID,
-status: response
-
+id:ID,
+status:response
 });
 
-// later connect to backend
-
+// nanti kita tukar kepada Power Automate
 finish(response);
 
 }
 
-
-
-// after submit
-
+// Finish
 function finish(response){
 
 status = response;
 
-
-// update status text before hide
-
 document.getElementById("statusBox").innerText =
 LANG[currentLang].status + ": " + response;
 
-
-// disable buttons
-
-document.querySelectorAll("button")
-.forEach(b => {
-
-b.disabled = true;
-
+document.querySelectorAll("button").forEach(btn=>{
+btn.disabled=true;
+btn.style.opacity="0.5";
 });
 
-
-// hide card
-
-document.querySelector(".card").style.display =
-"none";
-
-
-// show thank you page
-
-document.getElementById("thankYou").style.display =
-"flex";
+document.querySelector(".card").style.display="none";
+document.getElementById("thankYou").style.display="flex";
 
 }
 
-
-
-// language switch
-
+// Language Switch
 function setLang(lang){
 
-currentLang = lang;
+currentLang=lang;
 
-
-// move slider
-
+// Slider
 if(lang=="en"){
-
-document.getElementById("langSlider")
-.style.left = "3px";
-
+document.getElementById("langSlider").style.left="3px";
 }
-
 else{
-
-document.getElementById("langSlider")
-.style.left = "46px";
-
+document.getElementById("langSlider").style.left="46px";
 }
 
-
-// title
-
-document.getElementById("titleText").innerText =
+// Title
+document.getElementById("titleText").innerText=
 LANG[lang].title;
 
-
-// buttons
-
-document.getElementById("confirmBtn").innerText =
+// Buttons
+document.getElementById("confirmBtn").innerText=
 LANG[lang].confirm;
 
-document.getElementById("cancelBtn").innerText =
+document.getElementById("cancelBtn").innerText=
 LANG[lang].cancel;
 
-document.getElementById("rescheduleBtn").innerText =
+document.getElementById("rescheduleBtn").innerText=
 LANG[lang].reschedule;
 
-
-// field labels translate
-
-document.getElementById("patientText").innerText =
+// Patient Info
+document.getElementById("patientText").innerText=
 LANG[lang].patient + ": " + patient;
 
-document.getElementById("timeText").innerText =
+document.getElementById("timeText").innerText=
 LANG[lang].time + ": " + time;
 
-document.getElementById("mriText").innerText =
+document.getElementById("mriText").innerText=
 LANG[lang].mri + ": " + mriPart;
 
-document.getElementById("dateText").innerText =
+document.getElementById("dateText").innerText=
 LANG[lang].date + ": " + date;
 
-document.getElementById("statusBox").innerText =
+document.getElementById("statusBox").innerText=
 LANG[lang].status + ": " + status;
 
 }
