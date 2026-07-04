@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MRI Appointment</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <div style="text-align:center; margin-bottom:20px;">
+
+        <img
+        src="https://i.postimg.cc/MHmcB0nH/ALTY.jpg"
+        class="logo">
+
+        <div class="hospital">
+            ALTY Orthopaedic Hospital
+        </div>
+
+        <div class="langSwitch">
+
+            <div class="slider" id="langSlider"></div>
+
+            <div class="langOption"
+            onclick="setLang('en')">
+                ENG
+            </div>
+
+            <div class="langOption"
+            onclick="setLang('bm')">
+                BM
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="title" id="titleText">
+        MRI Appointment
+    </div>
+
+    <div class="box" id="patientText">
+        Patient: Loading...
+    </div>
+
+    <div class="box" id="timeText">
+        Time: Loading...
+    </div>
+
+    <div class="box" id="mriText">
+        MRI Part: Loading...
+    </div>
+
+    <div class="box" id="dateText">
+        Date: Loading...
+    </div>
+
+    <div class="box" id="statusBox">
+        Status: PENDING
+    </div>
+
+    <button id="confirmBtn"
+    class="btn green">
+    CONFIRM
+    </button>
+
+    <button id="cancelBtn"
+    class="btn red">
+    CANCEL
+    </button>
+
+    <button id="rescheduleBtn"
+    class="btn orange">
+    RESCHEDULE
+    </button>
+
+</div>
+
+<div id="thankYou">
+
+    <h2>Thank you!</h2>
+
+    <p>Your response has been recorded.</p>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
